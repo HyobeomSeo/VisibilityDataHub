@@ -1,5 +1,3 @@
 FROM openjdk:17-jdk-alpine
-CMD ["./mvnw", "clean", "package"]
-ARG JAR_FILE_PATH=target/*.jar
-COPY ${JAR_FILE_PATH} app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY target/datahub-0.0.1-SNAPSHOT.jar /app/datahub-0.0.1-SNAPSHOT.jar
+CMD ["java", "-jar", "/app/datahub-0.0.1-SNAPSHOT.jar"]

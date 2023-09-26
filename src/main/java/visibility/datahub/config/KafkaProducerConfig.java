@@ -13,7 +13,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import visibility.datahub.domain.InputData;
+import visibility.datahub.model.rcv.std.StandardTrackingData;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -21,21 +21,23 @@ public class KafkaProducerConfig {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
-    @Bean
-    public ProducerFactory<String, InputData>inpuDataProducerFactory() {
-        Map<String, Object> configProps = new HashMap<>();
+    private  Map<String, Object> getConfigProp(){
+    	Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        
-        
-        
-        return new DefaultKafkaProducerFactory<>(configProps);
+        return configProps;
+    }
+    
+    @Bean
+    public ProducerFactory<String, StandardTrackingData> standardTrackingDataProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(getConfigProp());
+    }
+    
+    @Bean
+    public KafkaTemplate<String, StandardTrackingData> standardTrackingDataProducer() {
+        return new KafkaTemplate<>(standardTrackingDataProducerFactory());
     }
 
-    @Bean
-    public KafkaTemplate<String, InputData> inputDataKaTemplate() {
-        return new KafkaTemplate<>(inpuDataProducerFactory());
-    }
 
 }

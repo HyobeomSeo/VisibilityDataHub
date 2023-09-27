@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visibility.datahub.mapper.StandardTrackingDataMapper">
+
+    <select id="findAll" resultType="visibility.datahub.model.rcv.std.StandardTrackingData">
+        SELECT * FROM cellof.standard_tracking_data
+    </select>
+    
+    <select id="findByTrackingDataNo" parameterType="string" resultType="visibility.datahub.model.rcv.std.StandardTrackingData">
+        SELECT * FROM cellof.standard_tracking_data WHERE trackingDataNo = #{trackingDataNo}
+    </select>
+    
+    <insert id="insert" parameterType="visibility.datahub.model.rcv.std.StandardTrackingData">
+        INSERT INTO cellof.standard_tracking_data (
+            trackingDataNo, transMode, transStatus, refDocType, refDocNo,
+            transMethodNo, fromLocation, toLocation, fromDate, fromTime, toDate, toTime
+        ) VALUES (
+            #{trackingDataNo}, #{transMode}, #{transStatus}, #{refDocType}, #{refDocNo},
+            #{transMethodNo}, #{fromLocation}, #{toLocation}, #{fromDate}, #{fromTime}, #{toDate}, #{toTime}
+        )
+    </insert>
+    
+    <update id="update" parameterType="visibility.datahub.model.rcv.std.StandardTrackingData">
+        UPDATE cellof.standard_tracking_data
+        SET
+            transMode = #{transMode},
+            transStatus = #{transStatus},
+            refDocType = #{refDocType},
+            refDocNo = #{refDocNo},
+            transMethodNo = #{transMethodNo},
+            fromLocation = #{fromLocation},
+            toLocation = #{toLocation},
+            fromDate = #{fromDate},
+            fromTime = #{fromTime},
+            toDate = #{toDate},
+            toTime = #{toTime}
+        WHERE trackingDataNo = #{trackingDataNo}
+    </update>
+    
+    <delete id="deleteByTrackingDataNo" parameterType="string">
+        DELETE FROM cellof.standard_tracking_data WHERE trackingDataNo = #{trackingDataNo}
+    </delete>
+</mapper>

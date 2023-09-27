@@ -2,11 +2,25 @@ package visibility.datahub.model.rcv.std;
 
 public class StandardTrackingEvent {
 
+	private Integer id;
+	private String trackingDataNo;
 	private String eventNo;
     private String eventTime;
     private String eventType;
     private double latitude;
     private double longitude;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getTrackingDataNo() {
+		return trackingDataNo;
+	}
+	public void setTrackingDataNo(String trackingDataNo) {
+		this.trackingDataNo = trackingDataNo;
+	}
 	public String getEventNo() {
 		return eventNo;
 	}
@@ -39,9 +53,9 @@ public class StandardTrackingEvent {
 	}
 	@Override
 	public String toString() {
-		return "StandardTrackingEvent [eventNo=" + eventNo + ", eventTime=" + eventTime + ", eventType=" + eventType
-				+ ", latitude=" + latitude + ", longitude=" + longitude + "]";
+		return "StandardTrackingEvent [id=" + id + ", trackingDataNo=" + trackingDataNo + ", eventNo=" + eventNo
+				+ ", eventTime=" + eventTime + ", eventType=" + eventType + ", latitude=" + latitude + ", longitude="
+				+ longitude + "]";
 	}
-    
-    
+	
 }

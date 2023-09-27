@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visibility.datahub.mapper.StandardTrackingInfoMapper">
+
+    <select id="findAll" resultType="visibility.datahub.model.rcv.std.StandardTrackingInfo">
+        SELECT * FROM cellof.standard_tracking_info
+    </select>
+    
+    <select id="findById" parameterType="Integer" resultType="visibility.datahub.model.rcv.std.StandardTrackingInfo">
+        SELECT * FROM cellof.standard_tracking_info WHERE id = #{id}
+    </select>
+    
+    <select id="findByTrackingDataNo" parameterType="String" resultType="visibility.datahub.model.rcv.std.StandardTrackingInfo">
+        SELECT * FROM cellof.standard_tracking_info WHERE trackingDataNo = #{trackingDataNo}
+    </select>
+    
+    <insert id="insert" parameterType="visibility.datahub.model.rcv.std.StandardTrackingInfo">
+        INSERT INTO cellof.standard_tracking_info (
+            trackingDataNo, infoType, infoContent
+        ) VALUES (
+            #{trackingDataNo}, #{infoType}, #{infoContent}
+        )
+    </insert>
+    
+    <update id="update" parameterType="visibility.datahub.model.rcv.std.StandardTrackingInfo">
+        UPDATE cellof.standard_tracking_info
+        SET
+            trackingDataNo = #{trackingDataNo},
+            infoType = #{infoType},
+            infoContent = #{infoContent}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM cellof.standard_tracking_info WHERE id = #{id}
+    </delete>
+</mapper>

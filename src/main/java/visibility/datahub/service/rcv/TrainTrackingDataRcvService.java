@@ -67,6 +67,7 @@ public class TrainTrackingDataRcvService {
 		List<TrainTrackingLocation> dataLocation = data.getTranEvent();
 		for(int i=0; i<dataLocation.size(); i++) {			
 			StandardTrackingEvent event = new StandardTrackingEvent();
+			event.setTrackingDataNo(data.getDocNo());
 			event.setEventNo(Integer.toString(i+1));
 			event.setEventTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 			event.setLatitude(dataLocation.get(i).getLatitude());
@@ -81,6 +82,7 @@ public class TrainTrackingDataRcvService {
 		List<StandardTrackingInfo> trackingInfo = new ArrayList<StandardTrackingInfo>();
 		
 		StandardTrackingInfo info1 = new StandardTrackingInfo();
+		info1.setTrackingDataNo(data.getDocNo());
 		info1.setInfoType("ADD");
 		info1.setInfoContent(data.getDocNo() + "_" + data.getIfId());
 		trackingInfo.add(info1);

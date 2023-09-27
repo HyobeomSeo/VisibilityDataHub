@@ -24,6 +24,34 @@ public class KafkaConsumerConfig {
 	@Value(value = "${kafka.bootstrapAddress}")
 	private String bootstrapAddress;
 	
+	public ConsumerFactory<String, StandardTrackingData> standardTrackingDataConsumerFactory(){
+		Map<String, Object> props = new HashMap<>();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "standardTrackingData");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		// KafkaListener autocommit disable
+		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		
+		return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),new JsonDeserializer<>(StandardTrackingData.class));
+	}
+	
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, StandardTrackingData> standardTrackingDataConsumerListenerContainerFactory(){
+		ConcurrentKafkaListenerContainerFactory<String, StandardTrackingData> factory = new ConcurrentKafkaListenerContainerFactory<String, StandardTrackingData>();
+
+		factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+
+		factory.setConsumerFactory(standardTrackingDataConsumerFactory());
+		// 필터 사용 시
+		// factory.setRecordFilterStrategy(record -> record.value().contains("World"));
+		
+		return factory;
+	}
+	
+	
+	
 	public ConsumerFactory<String, StandardTrackingData> aggregateConsumerFactory(){
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
@@ -44,6 +72,32 @@ public class KafkaConsumerConfig {
 		factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
 
 		factory.setConsumerFactory(aggregateConsumerFactory());
+		// 필터 사용 시
+		// factory.setRecordFilterStrategy(record -> record.value().contains("World"));
+		
+		return factory;
+	}
+	
+	public ConsumerFactory<String, StandardTrackingData> deployConsumerFactory(){
+		Map<String, Object> props = new HashMap<>();
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "deploy");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		// KafkaListener autocommit disable
+		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+		
+		return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(),new JsonDeserializer<>(StandardTrackingData.class));
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, StandardTrackingData> deployConsumerListenerContainerFactory(){
+		ConcurrentKafkaListenerContainerFactory<String, StandardTrackingData> factory = new ConcurrentKafkaListenerContainerFactory<String, StandardTrackingData>();
+
+		factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+
+		factory.setConsumerFactory(deployConsumerFactory());
 		// 필터 사용 시
 		// factory.setRecordFilterStrategy(record -> record.value().contains("World"));
 		

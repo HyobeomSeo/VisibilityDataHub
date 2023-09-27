@@ -8,31 +8,30 @@ import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import visibility.datahub.model.rcv.std.StandardTrackingData;
-import visibility.datahub.service.TrackingAggregateService;
+import visibility.datahub.service.StandardTrackingDataService;
 
 @Component
-public class TrackingAggregateConsumer {
+public class StandardTrackingDataConsumer {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private TrackingAggregateService trackingAggregateService;
+	private StandardTrackingDataService standardTrackingDataService;
 	
-	@KafkaListener(topics = "StandardTrackingData", containerFactory = "aggregateConsumerListenerContainerFactory")
+	@KafkaListener(topics = "StandardTrackingData", containerFactory = "standardTrackingDataConsumerListenerContainerFactory")
 	public void inputDataListener(StandardTrackingData data, Acknowledgment ack) {
 		
 		
 		try {
-            logger.debug("TrackingAggregateConsumer consume data");
-            logger.debug("Data {}", data.toString());
-            trackingAggregateService.doAggregate(data);
+            logger.debug("StandardTrackingDataConsumer consume data");
+            standardTrackingDataService.saveTrackingData(data);
+            
             // offset commit
             ack.acknowledge();
         } catch (Exception e) {
             // 에러 처리
             // 임의의 슬립 처리
             // ack.nack(1000 * 5);
-        	
         	logger.error("Error", e);
         }
 	}

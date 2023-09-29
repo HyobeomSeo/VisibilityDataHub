@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visibility.datahub.mapper.TrainTrackingDataMapper">
+
+    <select id="findAll" resultType="visibility.datahub.model.rcv.train.dto.TrainTrackingDataDto">
+        SELECT * FROM cellof.train_tracking_data
+    </select>
+    
+    <select id="findByIfid" parameterType="string" resultType="visibility.datahub.model.rcv.train.dto.TrainTrackingDataDto">
+        SELECT * FROM cellof.train_tracking_data WHERE ifid = #{ifId}
+    </select>
+    
+    <insert id="insert" parameterType="visibility.datahub.model.rcv.train.dto.TrainTrackingDataDto">
+        INSERT INTO cellof.train_tracking_data (
+            ifid, docno, trainno, fromstation, tostation,
+            departuredate, departuretime, arrivaldate, arrivaltime
+        ) VALUES (
+            #{ifId}, #{docNo}, #{trainNo}, #{fromStation}, #{toStation},
+            #{departureDate}, #{departureTime}, #{arrivalDate}, #{arrivalTime}
+        )
+    </insert>
+    
+    <update id="update" parameterType="visibility.datahub.model.rcv.train.dto.TrainTrackingDataDto">
+        UPDATE cellof.train_tracking_data
+        SET
+            docno = #{docNo},
+            trainno = #{trainNo},
+            fromstation = #{fromStation},
+            tostation = #{toStation},
+            departuredate = #{departureDate},
+            departuretime = #{departureTime},
+            arrivaldate = #{arrivalDate},
+            arrivaltime = #{arrivalTime}
+        WHERE ifid = #{ifId}
+    </update>
+    
+    <delete id="deleteByIfid" parameterType="string">
+        DELETE FROM cellof.train_tracking_data WHERE ifid = #{ifId}
+    </delete>
+</mapper>

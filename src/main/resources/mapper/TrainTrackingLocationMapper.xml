@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visibility.datahub.mapper.TrainTrackingLocationMapper">
+
+    <select id="findAll" resultType="visibility.datahub.model.rcv.train.dto.TrainTrackingLocationDto">
+        SELECT * FROM cellof.train_tracking_location
+    </select>
+    
+    <select id="findById" parameterType="Integer" resultType="visibility.datahub.model.rcv.train.dto.TrainTrackingLocationDto">
+        SELECT * FROM cellof.train_tracking_location WHERE id = #{id}
+    </select>
+    
+    <insert id="insert" parameterType="visibility.datahub.model.rcv.train.dto.TrainTrackingLocationDto">
+        INSERT INTO cellof.train_tracking_location (
+            ifid, latitude, longitude
+        ) VALUES (
+            #{ifId}, #{latitude}, #{longitude}
+        )
+    </insert>
+    
+    <update id="update" parameterType="visibility.datahub.model.rcv.train.dto.TrainTrackingLocationDto">
+        UPDATE cellof.train_tracking_location
+        SET
+            ifid = #{ifId},
+            latitude = #{latitude},
+            longitude = #{longitude}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM cellof.train_tracking_location WHERE id = #{id}
+    </delete>
+</mapper>

@@ -6,11 +6,14 @@
 >
 >>eval-no1 : #1 신뢰성 검증 형상
 >>
->>eval-no2-org : #2 유지보수성 검증 API 추가 전 형상
+>>eval-no2-new-org    : #2 유지보수성 검증 API 추가 전 형상 (Broker 패턴, NoSQL 적용)
 >>
->>eval-no2-addapi-nosql : #2 유지보수성 검증 API 추가 후 형상(Broker 패턴, NoSQL 적용)
+>>eval-no2-new-addapi : #2 유지보수성 검증 API 추가 후 형상 (Broker 패턴, NoSQL 적용)
 >>
->>eval-no2-addapi-rdms : #2 유지보수성 검증 API 추가 후 형상(기존 RDBMS기반)
+>>
+>>eval-no2-old-org    : #2 유지보수성 검증 API 추가 전 형상(기존 RDBMS기반)
+>>
+>>eval-no2-old-addapi : #2 유지보수성 검증 API 추가 후 형상(기존 RDBMS기반)
 >>
 ---
 >Spring Boot 기반 API

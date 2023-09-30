@@ -23,3 +23,7 @@
 >Mongo DB
 >
 >>Mongo-express URL : http://34.64.234.215:9081/
+---
+>Kafka
+>
+>>Kafka-UI URL : http://34.64.234.215:9999/
